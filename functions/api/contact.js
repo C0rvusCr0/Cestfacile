@@ -9,7 +9,7 @@ export async function onRequestPost(context) {
         "Authorization": `Bearer ${context.env.RESEND_API_KEY}`
       },
       body: JSON.stringify({
-        from: "Contact Site <onboarding@resend.dev>",
+        from: "Cest Facile TI <noreply@mail.cestfacileti.com>",
         to: "contact@cestfacileti.com",
         subject: `Nouveau message de ${name}`,
         html: `
