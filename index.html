@@ -1527,8 +1527,29 @@
                         </div>
                     </div>
                 </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label>Nom</label>
+                            <input name="name" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input name="email" type="email" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea name="message" required></textarea>
+                        </div>
+
+                        <button class="submit-btn" type="submit">Envoyer</button>
+                        <p id="status"></p>
+                    </form>
+                </div>
             </div>
-        </div>
+            </form>
         </div>
     </section>
 
@@ -1638,33 +1659,6 @@
             window.addEventListener("resize", setMarqueeVars);
         })();
     </script>
-
-    <form id="contactForm">
-        <input name="name" required placeholder="Name">
-        <input name="email" type="email" required placeholder="Email">
-        <textarea name="message" required placeholder="Message"></textarea>
-        <button type="submit">Send</button>
-        <p id="status"></p>
-    </form>
-
-    <script>
-        document.getElementById("contactForm").addEventListener("submit", async e => {
-            e.preventDefault();
-            const data = Object.fromEntries(new FormData(e.target).entries());
-
-            const res = await fetch("/api/contact", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data)
-            });
-
-            document.getElementById("status").innerText =
-                res.ok ? "Sent ✅" : "Error ❌";
-        });
-    </script>
-
-
-
 
 </body>
 
