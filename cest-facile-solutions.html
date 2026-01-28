@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C'est Facile Solutions TI - Votre infrastructure, sans complexité</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0047AB;
+            --secondary-blue: #1E90FF;
+            --dark-blue: #001F3F;
+            --light-blue: #4A90E2;
+            --accent-cyan: #00D9FF;
+            --bg-dark: #0A1628;
+            --bg-light: #F8FAFB;
+            --text-dark: #1A2332;
+            --text-light: #E8F1F5;
+            --border-color: rgba(30, 144, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .circuit-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.03;
+            background-image:
+                repeating-linear-gradient(90deg, var(--primary-blue) 0px, transparent 1px, transparent 50px),
+                repeating-linear-gradient(0deg, var(--primary-blue) 0px, transparent 1px, transparent 50px);
+            animation: circuit-flow 20s linear infinite;
+        }
+
+        @keyframes circuit-flow {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            height: 78px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0.9rem 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 52px;
+            width: auto;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .logo span {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            line-height: 1;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            margin-left: auto;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-blue);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            margin-top: 100px;
+            padding: 6rem 3rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            min-height: calc(100vh - 100px);
+        }
+
+        .hero-logo {
+            height: 160px;
+            width: auto;
+            display: block;
+            transform: translate(-10px, -40px);
+        }
+
+
+        .hero-content {
+            animation: fadeInLeft 0.8s ease-out 0.2s backwards;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .tagline {
+            font-size: 1.5rem;
+            color: var(--light-blue);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #5A6C7D;
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .hero-brand {
+            width: 260px;
+            height: 90px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            margin-left: 30px;
+            margin-bottom: 1.8rem;
+        }
+
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 71, 171, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 71, 171, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 500px;
+            animation: fadeInRight 0.8s ease-out 0.4s backwards;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .floating-card {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 40px rgba(0, 71, 171, 0.1);
+            border: 1px solid var(--border-color);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .card-1 {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .card-2 {
+            top: 50%;
+            right: 10%;
+            animation-delay: 1s;
+        }
+
+        .card-3 {
+            bottom: 10%;
+            left: 30%;
+            animation-delay: 2s;
+        }
+
+        .floating-card h3 {
+            color: var(--primary-blue);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .floating-card p {
+            color: #5A6C7D;
+            font-size: 0.85rem;
+        }
+
+        .services {
+            padding: 6rem 3rem;
+            background: linear-gradient(180deg, var(--bg-light) 0%, #E8F1F5 100%);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: #5A6C7D;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        .service-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .service-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .service-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .service-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 71, 171, 0.15);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .service-card p {
+            color: #5A6C7D;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .service-card ul {
+            list-style: none;
+            color: #5A6C7D;
+            margin-top: 1rem;
+        }
+
+        .service-card li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-blue);
+            font-weight: bold;
+        }
+
+        .about {
+            padding: 6rem 3rem;
+            background: white;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .about-text p {
+            color: #5A6C7D;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .value-item {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--secondary-blue);
+        }
+
+        .value-item h4 {
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .value-item p {
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .stats {
+            padding: 4rem 3rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
+            color: white;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        .stat-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .stat-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .stat-item:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .stat-item:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, white, var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .contact {
+            padding: 6rem 3rem;
+            background: var(--bg-light);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-info h2 {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .contact-info p {
+            color: #5A6C7D;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .contact-item-text h4 {
+            color: var(--primary-blue);
+            margin-bottom: 0.25rem;
+            font-size: 1rem;
+        }
+
+        .contact-item-text p {
+            color: #5A6C7D;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 40px rgba(0, 71, 171, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-blue);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 71, 171, 0.4);
+        }
+
+        .team {
+            padding: 6rem 3rem;
+            background: #ffffff;
+        }
+
+        .team .section-header {
+            max-width: 780px;
+            margin-bottom: 3rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            align-items: stretch;
+        }
+
+        .team-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 71, 171, 0.10);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .team-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 50px rgba(0, 71, 171, 0.16);
+        }
+
+        .team-photo {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .team-body {
+            background: var(--dark-blue);
+            padding: 1.75rem 1.75rem 2rem;
+            color: white;
+            flex-grow: 1;
+        }
+
+        .team-body h3 {
+            font-size: 1.6rem;
+            margin: 0 0 0.35rem 0;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .team-role {
+            color: #ff8a00;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+        }
+
+        .team-body p {
+            opacity: 0.92;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .certifications {
+            padding: 80px 0;
+        }
+
+        .certifications .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+
+        .section-header {
+            margin-bottom: 40px;
+        }
+
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        @media (max-width: 1100px) {
+            .cert-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 650px) {
+            .cert-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        .cert-block {
+            margin-bottom: 48px;
+        }
+
+
+        .cert-card {
+            background: #fff;
+            border: 1px solid rgba(30, 144, 255, 0.18);
+            border-radius: 14px;
+
+            padding: 16px 18px;
+            min-height: 78px;
+            line-height: 1.25;
+
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            color: var(--primary-blue);
+            font-weight: 700;
+            font-size: 15px;
+
+            box-shadow: 0 10px 26px rgba(0, 60, 160, 0.06);
+            transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+        }
+
+        .cert-card::before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            flex: 0 0 10px;
+        }
+
+        .cert-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(30, 144, 255, 0.35);
+            box-shadow: 0 16px 34px rgba(0, 60, 160, 0.10);
+        }
+
+        .cert-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+
+            padding: 16px 20px;
+            min-height: 96px;
+
+            background: #ffffff;
+            border: 1px solid rgba(30, 144, 255, 0.18);
+            border-radius: 14px;
+
+            box-shadow: 0 10px 26px rgba(0, 60, 160, 0.06);
+            transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+        }
+
+        .cert-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(30, 144, 255, 0.35);
+            box-shadow: 0 16px 34px rgba(0, 60, 160, 0.10);
+        }
+
+        .cert-badge {
+            width: 90px;
+            height: 54px;
+            object-fit: contain;
+            flex: 0 0 auto;
+        }
+
+        .cert-text {
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.25;
+            color: var(--primary-blue);
+        }
+
+
+        .partner-block h3 {
+            margin-top: 10px;
+            margin-bottom: 18px;
+        }
+
+        .partner-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+        }
+
+        .partner {
+            background: #0b2a4a;
+            color: white;
+            padding: 14px 18px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 650;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .partner-card {
+            flex: 0 0 auto;
+            height: 80px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 0 40px;
+            background: none;
+            border: none;
+            box-shadow: none;
+        }
+
+
+        .partner-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 26px rgba(0, 60, 160, 0.12);
+            border-color: #cfe4ff;
+        }
+
+        .partner-card img {
+            max-height: 42px;
+            width: auto;
+
+            filter: grayscale(100%) opacity(0.6);
+            transition: transform .3s ease, filter .3s ease, opacity .3s ease;
+        }
+
+        .partner-card:hover img {
+            filter: grayscale(0%) opacity(1);
+            transform: scale(1.08);
+        }
+
+        .cert-card,
+        .partner {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cert-card:hover,
+        .partner:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .partners-carousel {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 8px 0;
+            border-top: 1px solid rgba(30, 144, 255, 0.10);
+        }
+
+        .carousel-viewport {
+            height: 110px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            background: transparent;
+        }
+
+        .carousel-viewport::before,
+        .carousel-viewport::after {
+            display: none;
+        }
+
+        .carousel-viewport::before {
+            left: 0;
+            background: linear-gradient(to right, var(--partners-bg) 0%, transparent 100%);
+        }
+
+        .carousel-viewport::after {
+            right: 0;
+            background: linear-gradient(to left, var(--partners-bg) 0%, transparent 100%);
+        }
+
+
+
+        .carousel-viewport::-webkit-scrollbar {
+            display: none;
+        }
+
+        .carousel-viewport {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 24px;
+            padding: 0 90px;
+            width: max-content;
+            will-change: transform;
+            animation: partners-marquee var(--marquee-duration, 22s) linear infinite;
+            align-items: center;
+        }
+
+        .carousel-viewport:hover .carousel-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes partners-marquee {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(calc(-1 * var(--marquee-distance, 1000px)));
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .carousel-track {
+                animation: none;
+                transform: none;
+            }
+        }
+
+        .carousel-btn {
+            display: none;
+        }
+
+
+        .carousel-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            border: 1px solid #dbeafe;
+            background: white;
+            font-size: 28px;
+            line-height: 1;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+            display: grid;
+            place-items: center;
+        }
+
+        .partner-logo {
+            flex: 0 0 260px;
+            height: 100px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .partner-logo img {
+            width: 160px;
+            height: 56px;
+            object-fit: contain;
+
+            filter: grayscale(100%) contrast(105%);
+            opacity: 0.9;
+
+            transition: transform .25s ease, filter .25s ease, opacity .25s ease;
+        }
+
+        .partner-logo:hover img {
+            filter: grayscale(0%) contrast(100%);
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+
+
+
+        .carousel-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 650px) {
+            .partner-logo {
+                width: 180px;
+                height: 74px;
+            }
+
+            .carousel-btn {
+                display: none;
+            }
+
+        }
+
+
+        footer {
+            background: var(--dark-blue);
+            color: var(--text-light);
+            padding: 3rem 3rem 1.5rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p {
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--accent-cyan);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.8;
+        }
+
+        @media (max-width: 968px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="circuit-bg"></div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <img src="logo_globe.png" class="logo-img">
+                <span>C'est Facile Solutions TI</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#apropos">À propos</a></li>
+                <li><a href="#equipe">Équipe</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#contact">Contact</a></li>
+
+            </ul>
+        </div>
+    </nav>
+
+    <section id="accueil" class="hero">
+        <div class="hero-content">
+            <div class="hero-brand">
+                <img src="logo.png" alt="C'est Facile Solutions TI" class="hero-logo">
+            </div>
+            <div class="tagline">Votre infrastructure, sans complexité.</div>
+            <h1>Infrastructure TI moderne et sécurisée</h1>
+            <p>Nous accompagnons votre entreprise dans la modernisation de ses systèmes informatiques avec des solutions
+                structurées, sécurisées et documentées.</p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">Discutons de votre projet</a>
+                <a href="#services" class="btn btn-secondary">Découvrir nos services</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="floating-card card-1">
+                <h3>Active Directory</h3>
+                <p>Gestion centralisée des utilisateurs et accès</p>
+            </div>
+            <div class="floating-card card-2">
+                <h3>Cybersécurité</h3>
+                <p>Protection avancée et durcissement des systèmes</p>
+            </div>
+            <div class="floating-card card-3">
+                <h3>Résilience</h3>
+                <p>Continuité des opérations garantie</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Disponibilité visée</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">Support continu</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">ISO</span>
+                <span class="stat-label">Standards de sécurité</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">∞</span>
+                <span class="stat-label">Solutions évolutives</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Nos domaines d'expertise</h2>
+                <p>Des solutions complètes pour moderniser et sécuriser votre infrastructure technologique</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🏢</div>
+                    <h3>Infrastructure d'entreprise</h3>
+                    <p>Conception et déploiement d'infrastructures robustes et évolutives</p>
+                    <ul>
+                        <li>Windows Server & Active Directory</li>
+                        <li>Services réseau (DNS, DHCP)</li>
+                        <li>Serveurs de fichiers et partage</li>
+                        <li>Intégration Microsoft 365</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔒</div>
+                    <h3>Cybersécurité défensive</h3>
+                    <p>Protection avancée de vos actifs informatiques contre les menaces</p>
+                    <ul>
+                        <li>GPO et durcissement des systèmes</li>
+                        <li>Segmentation réseau (VLAN, DMZ)</li>
+                        <li>Principe du moindre privilège</li>
+                        <li>Journalisation et traçabilité</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">♻️</div>
+                    <h3>Résilience et continuité</h3>
+                    <p>Garantir la disponibilité de vos services critiques en toutes circonstances</p>
+                    <ul>
+                        <li>Stratégies de sauvegarde</li>
+                        <li>Plans de reprise après sinistre</li>
+                        <li>Redondance des systèmes</li>
+                        <li>Tests de continuité</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📋</div>
+                    <h3>Documentation et formation</h3>
+                    <p>Transfert de connaissances pour une exploitation simplifiée</p>
+                    <ul>
+                        <li>Documentation technique complète</li>
+                        <li>Procédures d'exploitation</li>
+                        <li>Formation des équipes</li>
+                        <li>Support continu</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="apropos" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>À propos de C'est Facile Solutions TI</h2>
+                    <p>Nous sommes une entreprise spécialisée en technologies de l'information qui accompagne les
+                        organisations dans la modernisation de leurs systèmes informatiques.</p>
+                    <p>Notre mission est de proposer des solutions structurées, sécurisées et documentées qui répondent
+                        aux besoins réels de nos clients, même dans les environnements les plus exigeants.</p>
+                    <p>Nous intervenons auprès d'organisations dont les activités dépendent fortement de leurs systèmes
+                        informatiques et qui nécessitent des services stables, disponibles et sécurisés.</p>
+                </div>
+                <div class="values-grid">
+                    <div class="value-item">
+                        <h4>Expertise technique</h4>
+                        <p>Maîtrise approfondie des technologies d'infrastructure d'entreprise</p>
+                    </div>
+                    <div class="value-item">
+                        <h4>Sécurité avant tout</h4>
+                        <p>Protection maximale de vos données et systèmes critiques</p>
+                    </div>
+                    <div class="value-item">
+                        <h4>Simplicité d'exploitation</h4>
+                        <p>Solutions complexes rendues faciles à gérer au quotidien</p>
+                    </div>
+                    <div class="value-item">
+                        <h4>Accompagnement continu</h4>
+                        <p>Présence et support tout au long du cycle de vie de votre infrastructure</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="equipe" class="team">
+        <div class="container">
+            <div class="section-header">
+                <h2>Notre équipe</h2>
+                <p>Une équipe multidisciplinaire dédiée à la conception, la sécurisation et la documentation
+                    d’infrastructures TI.</p>
+            </div>
+
+            <div class="team-grid">
+                <article class="team-card">
+                    <img src="Julien.png" alt="Julien Defontaine" class="team-photo">
+                    <div class="team-body">
+                        <h3>Julien Defontaine</h3>
+                        <div class="team-role">Architecte infrastructure et réseau</div>
+                        <p>Julien conçoit des architectures réseau et serveurs structurées, capables de supporter des
+                            environnements distribués
+                            et exigeants. Il veille à ce que l’infrastructure soit claire, segmentée et facile à
+                            maintenir à long terme.</p>
+                    </div>
+                </article>
+
+                <article class="team-card">
+                    <img src="Jeremy.png" alt="Jérémy Bastien" class="team-photo">
+                    <div class="team-body">
+                        <h3>Jérémy Bastien</h3>
+                        <div class="team-role">Administrateur systèmes et services</div>
+                        <p> Jérémy met en place les environnements et les services essentiels au bon fonctionnement des
+                            organisations.
+                            Il structure les accès, les permissions et l’organisation logique des ressources pour
+                            assurer
+                            un environnement stable et cohérent. </p>
+                    </div>
+                </article>
+
+                <article class="team-card">
+                    <img src="tommy.png" alt="Tommy Lee-Paradis" class="team-photo">
+                    <div class="team-body">
+                        <h3>Tommy Lee-Paradis</h3>
+                        <div class="team-role">Spécialiste sécurité, intégration et solutions web</div>
+                        <p> Tommy se concentre sur la sécurisation des infrastructures et l’intégration des solutions
+                            technologiques. Il
+                            s’assure que les environnements déployés respectent les bonnes pratiques en matière d’accès,
+                            de
+                            protection et de continuité des opérations. </p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section id="certifications" class="certifications">
+        <div class="container">
+
+            <div class="section-header">
+                <h2>Certifications & Partenaires</h2>
+                <p>Nous travaillons avec des technologies reconnues et respectons les meilleures pratiques de
+                    l’industrie.</p>
+            </div>
+
+            <div class="cert-block">
+                <h3>Nos certifications</h3>
+
+                <div class="cert-grid">
+
+                    <div class="cert-card">
+                        <img class="cert-badge" src="ccna.png" alt="Cisco CCNA / CCNP">
+                        <div class="cert-text">Cisco CCNA / CCNP</div>
+                    </div>
+
+                    <div class="cert-card">
+                        <img class="cert-badge" src="microsoft-ad.png"
+                            alt="Microsoft Active Directory & Windows Server">
+                        <div class="cert-text">Microsoft Active Directory & Windows Server</div>
+                    </div>
+
+                    <div class="cert-card">
+                        <img class="cert-badge" src="securityplus.png" alt="CompTIA Security+">
+                        <div class="cert-text">CompTIA Security+</div>
+                    </div>
+
+                    <div class="cert-card">
+                        <img class="cert-badge" src="fortinet-cert.png" alt="Fortinet NSE">
+                        <div class="cert-text">Fortinet NSE</div>
+                    </div>
+
+                    <div class="cert-card">
+                        <img class="cert-badge" src="vmware-cert.png" alt="Virtualisation VMware / Hyper-V">
+                        <div class="cert-text">Virtualisation VMware / Hyper-V</div>
+                    </div>
+
+                    <div class="cert-card">
+                        <img class="cert-badge" src="itil.png" alt="Bonnes pratiques ITIL & documentation TI">
+                        <div class="cert-text">Bonnes pratiques ITIL & documentation TI</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="partner-block">
+                <h3>Technologies et partenaires</h3>
+
+                <div class="partners-carousel" aria-label="Nos partenaires">
+
+                    <div class="carousel-viewport" id="partnersViewport" tabindex="0">
+                        <div class="carousel-track">
+                            <a class="partner-logo" href="#" aria-label="Cisco">
+                                <img src="cisco.png" alt="Cisco">
+                            </a>
+
+                            <a class="partner-logo" href="#" aria-label="Microsoft">
+                                <img src="microsoft.png" alt="Microsoft">
+                            </a>
+
+                            <a class="partner-logo" href="#" aria-label="Fortinet">
+                                <img src="fortinet.png" alt="Fortinet">
+                            </a>
+
+                            <a class="partner-logo" href="#" aria-label="VMware">
+                                <img src="vmware.png" alt="VMware">
+                            </a>
+
+                            <a class="partner-logo" href="#" aria-label="Ubiquiti">
+                                <img src="ubiquiti.png" alt="Ubiquiti">
+                            </a>
+
+                            <a class="partner-logo" href="#" aria-label="pfSense">
+                                <img src="pfsense.png" alt="pfSense">
+                            </a>
+
+                            <a class="partner-logo" href="#" aria-label="Ubuntu">
+                                <img src="ubuntu.png" alt="Ubuntu">
+                            </a>
+
+                            <a class="partner-logo" href="#" aria-label="Veeam">
+                                <img src="veeam.png" alt="Veeam">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Contactez-nous</h2>
+                    <p>Vous avez un projet d'infrastructure TI? Notre équipe d'experts est prête à vous accompagner dans
+                        la réalisation de vos objectifs technologiques.</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div class="contact-item-text">
+                                <h4>Email</h4>
+                                <p>contact@cestfacileti.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📞</div>
+                            <div class="contact-item-text">
+                                <h4>Téléphone</h4>
+                                <p>+1 (514) 555-FACILE</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div class="contact-item-text">
+                                <h4>Adresse</h4>
+                                <p>Montréal, Québec, Canada</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="contact-form">
+                        [wpforms id="6"]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>C'est Facile Solutions TI</h3>
+                <p>Votre partenaire de confiance pour la modernisation et la sécurisation de votre infrastructure
+                    technologique. Des solutions professionnelles adaptées à vos besoins.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Liens rapides</h3>
+                <ul class="footer-links">
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#apropos">À propos</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Expertise</h3>
+                <ul class="footer-links">
+                    <li><a href="#services">Infrastructure</a></li>
+                    <li><a href="#services">Cybersécurité</a></li>
+                    <li><a href="#services">Résilience</a></li>
+                    <li><a href="#services">Documentation</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 C'est Facile Solutions TI. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        document.querySelector('.contact-form form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Merci pour votre message! Nous vous contacterons bientôt.');
+            this.reset();
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+    <script>
+        (function () {
+            const viewport = document.getElementById("partnersViewport");
+            const track = viewport?.querySelector(".carousel-track");
+            if (!viewport || !track) return;
+
+            const originalItems = Array.from(track.children);
+            originalItems.forEach(item => track.appendChild(item.cloneNode(true)));
+
+            function setMarqueeVars() {
+                const totalWidth = track.scrollWidth;
+                const halfWidth = totalWidth / 2;
+
+                track.style.setProperty("--marquee-distance", `${halfWidth}px`);
+
+                const speed = 70;
+                const duration = Math.max(halfWidth / speed, 12);
+                track.style.setProperty("--marquee-duration", `${duration}s`);
+            }
+            const imgs = track.querySelectorAll("img");
+            let loaded = 0;
+            const done = () => {
+                loaded++;
+                if (loaded >= imgs.length) setMarqueeVars();
+            };
+
+            if (imgs.length === 0) {
+                setMarqueeVars();
+            } else {
+                imgs.forEach(img => {
+                    if (img.complete) done();
+                    else img.addEventListener("load", done, { once: true });
+                });
+            }
+
+            window.addEventListener("resize", setMarqueeVars);
+        })();
+    </script>
+
+
+</body>
+
+</html>
