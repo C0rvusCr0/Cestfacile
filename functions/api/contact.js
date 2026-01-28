@@ -8,16 +8,16 @@ export async function onRequestPost({ request, env }) {
   const resp = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
-      "Authorization": `Bearer ${env.RESEND_API_KEY}`,
+      Authorization: `Bearer ${env.RESEND_API_KEY}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "Cestfacile Contact <contact@cestfacile.com>",
+      from: "Cestfacile <contact@cestfacile.com>",
       to: ["contact@cestfacile.com"],
       reply_to: email,
-      subject: `New contact from ${name}`,
+      subject: `Nouveau message de ${name}`,
       text: `
-Name: ${name}
+Nom: ${name}
 Email: ${email}
 
 ${message}
@@ -26,8 +26,7 @@ ${message}
   });
 
   if (!resp.ok) {
-    const t = await resp.text();
-    return new Response(t, { status: 500 });
+    return new Response("Email error", { status: 500 });
   }
 
   return new Response(JSON.stringify({ ok: true }), {
