@@ -1527,11 +1527,8 @@
                         </div>
                     </div>
                 </div>
-                    <div class="contact-form">
-                        [wpforms id="6"]
-                    </div>
-                </div>
             </div>
+        </div>
         </div>
     </section>
 
@@ -1641,6 +1638,32 @@
             window.addEventListener("resize", setMarqueeVars);
         })();
     </script>
+
+    <form id="contactForm">
+        <input name="name" required placeholder="Name">
+        <input name="email" type="email" required placeholder="Email">
+        <textarea name="message" required placeholder="Message"></textarea>
+        <button type="submit">Send</button>
+        <p id="status"></p>
+    </form>
+
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", async e => {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(e.target).entries());
+
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            document.getElementById("status").innerText =
+                res.ok ? "Sent ✅" : "Error ❌";
+        });
+    </script>
+
+
 
 
 </body>
