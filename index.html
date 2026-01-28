@@ -1598,6 +1598,12 @@
             });
         });
 
+        document.querySelector('.contact-form form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Merci pour votre message! Nous vous contacterons bientôt.');
+            this.reset();
+        });
+
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -1653,6 +1659,29 @@
             window.addEventListener("resize", setMarqueeVars);
         })();
     </script>
+
+    <script>
+        const form = document.getElementById("contactForm");
+        const statusEl = document.getElementById("status");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            statusEl.textContent = "Envoi...";
+
+            const data = Object.fromEntries(new FormData(form).entries());
+
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            statusEl.textContent = res.ok ? "Sent ✅" : "Error ❌";
+            if (res.ok) form.reset();
+        });
+    </script>
+
 
 </body>
 
