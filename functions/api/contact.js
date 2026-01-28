@@ -1,5 +1,3 @@
-import { SmtpClient } from "npm:smtp-client";
-
 export async function onRequestPost({ request, env }) {
   const { name, email, message } = await request.json();
 
@@ -7,22 +5,32 @@ export async function onRequestPost({ request, env }) {
     return new Response("Missing fields", { status: 400 });
   }
 
-  const client = new SmtpClient();
+  const resp = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${env.RESEND_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: "Cestfacile Contact <contact@cestfacile.com>",
+      to: ["contact@cestfacile.com"],
+      reply_to: email,
+      subject: `New contact from ${name}`,
+      text: `
+Name: ${name}
+Email: ${email}
 
-  await client.connect({
-    hostname: "mail.privateemail.com",
-    port: 587,
-    secure: false,
+${message}
+      `,
+    }),
   });
 
-  await client.greet({ hostname: "cestfacile.com" });
+  if (!resp.ok) {
+    const t = await resp.text();
+    return new Response(t, { status: 500 });
+  }
 
-  await client.authPlain({
-    username: env.SMTP_USER,
-    password: env.SMTP_PASS,
+  return new Response(JSON.stringify({ ok: true }), {
+    headers: { "Content-Type": "application/json" },
   });
-
-  await client.mail({ from: env.SMTP_USER });
-  await client.rcpt({ to: env.SMTP_USER });
-
-  await client.dat
+}
