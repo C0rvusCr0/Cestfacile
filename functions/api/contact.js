@@ -1,35 +1,35 @@
-export async function onRequestPost({ request, env }) {
-  const { name, email, message } = await request.json();
+export async function onRequestPost(context) {
+  try {
+    const { name, email, message } = await context.request.json();
 
-  if (!name || !email || !message) {
-    return new Response("Missing fields", { status: 400 });
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${context.env.RESEND_API_KEY}`
+      },
+      body: JSON.stringify({
+        from: "Contact Site <onboarding@resend.dev>",
+        to: "contact@cestfacileti.com",
+        subject: `Nouveau message de ${name}`,
+        html: `
+          <h2>Nouveau message du site</h2>
+          <p><strong>Nom:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Message:</strong><br/>${message}</p>
+        `
+      })
+    });
+
+    const text = await response.text();
+
+    if (!response.ok) {
+      return new Response(text, { status: 500 });
+    }
+
+    return new Response("OK", { status: 200 });
+
+  } catch (err) {
+    return new Response(err.toString(), { status: 500 });
   }
-
-  const resp = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${env.RESEND_API_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: "Cestfacile <contact@cestfacile.com>",
-      to: ["contact@cestfacile.com"],
-      reply_to: email,
-      subject: `Nouveau message de ${name}`,
-      text: `
-Nom: ${name}
-Email: ${email}
-
-${message}
-      `,
-    }),
-  });
-
-  if (!resp.ok) {
-    return new Response("Email error", { status: 500 });
-  }
-
-  return new Response(JSON.stringify({ ok: true }), {
-    headers: { "Content-Type": "application/json" },
-  });
 }
