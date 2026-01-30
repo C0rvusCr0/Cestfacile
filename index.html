@@ -1547,8 +1547,6 @@
                             <label>Message</label>
                             <textarea name="message" required></textarea>
                         </div>
-                        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-
                         <div class="cf-turnstile" data-sitekey="0x4AAAAAACVzlrZiBR2p3T-o"></div>
                         <button class="submit-btn" type="submit">Envoyer</button>
                         <p id="status"></p>
@@ -1665,21 +1663,50 @@
 
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
-
             statusEl.textContent = "Envoi...";
 
             const data = Object.fromEntries(new FormData(form).entries());
 
-            const res = await fetch("/api/contact", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data)
-            });
+            const token = document.querySelector('[name="cf-turnstile-response"]')?.value;
 
-            statusEl.textContent = res.ok ? "Sent ✅" : "Error ❌";
-            if (res.ok) form.reset();
+            if (!token) {
+                statusEl.textContent = "Veuillez compléter le captcha ❌";
+                return;
+            }
+
+            const payload = {
+                name: data.name,
+                email: data.email,
+                message: data.message,
+                website: data.website || "",  
+                turnstileToken: token                
+            };
+
+            try {
+                const res = await fetch("/api/contact", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok) {
+                    statusEl.textContent = "Envoyé ✅";
+                    form.reset();
+
+                    if (window.turnstile) turnstile.reset();
+                } else {
+                    const text = await res.text().catch(() => "");
+                    statusEl.textContent = "Erreur ❌ " + (text ? `(${text})` : "");
+                    if (window.turnstile) turnstile.reset();
+                }
+            } catch (err) {
+                statusEl.textContent = "Erreur réseau ❌";
+                if (window.turnstile) turnstile.reset();
+            }
         });
     </script>
+
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 
 </body>
