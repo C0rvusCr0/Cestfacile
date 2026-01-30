@@ -49,7 +49,7 @@ export async function onRequest(context) {
     const cached = await cache.match(key);
     if (cached) hits = parseInt(await cached.text(), 10) || 0;
 
-    if (hits >= 5) {
+    if (hits >= 20) {
       return new Response("Too many requests", {
         status: 429,
         headers: corsHeaders(origin),
