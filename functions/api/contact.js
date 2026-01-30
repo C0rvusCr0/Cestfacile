@@ -95,7 +95,7 @@ export async function onRequest(context) {
     }
 
     const turnstileOK = await verifyTurnstile({
-      secret: env.TURNSTILE_SECRET_KEY,
+      secret: env.TURNSTILE_SECRET,
       token: turnstileToken,
       ip,
     });
